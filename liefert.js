@@ -70,31 +70,31 @@ let fries = [{
 ];
 
 let beverages = [{
-    'name': 'Homemade IceTea 0,5 Liter',
+    'name': 'Homemade IceTea <br> 0,5 Liter',
     'info': 'mit Pfirsich, Mango, Minze',
     'price': 5.00,
     'amount': 1,
     'type': 'beverages'
 }, {
-    'name': 'Paulaner Spezi 0,5 Liter',
+    'name': 'Paulaner Spezi <br> 0,5 Liter',
     'info': '',
     'price': 3.00,
     'amount': 1,
     'type': 'beverages'
 }, {
-    'name': 'Tegernseer Helles 0,5 Liter',
+    'name': 'Tegernseer Helles <br> 0,5 Liter',
     'info': '',
     'price': 3.50,
     'amount': 1,
     'type': 'beverages'
 }, {
-    'name': 'Huubert Weinschorle 0,33 Liter',
+    'name': 'Huubert Weinschorle <br> 0,33 Liter',
     'info': '',
     'price': 3.50,
     'amount': 1,
     'type': 'beverages'
 }, {
-    'name': 'Wasser 0,5 Liter',
+    'name': 'Wasser <br> 0,5 Liter',
     'info': '',
     'price': 2.50,
     'amount': 1,
@@ -129,23 +129,37 @@ function loadItem(items, id) {
                     <div class="product-info"> ${items[i]['info']} </div> <br>
                     <div class="product-price"> ${items[i]['price'].toFixed(2).replace(".", ",")} € </div>
                 </div>
-                <div onclick="addToBasket('${id}', ${i}), calcSumPrice(${i})" class="plus">+</div>
+                <a onclick="checkBasket('${id}', ${i}), calcSumPrice(${i})" href="#basket" class="plus">+</a>
             </div>`;
     }
 }
 
+//Hier wird geprüft ob das Produkt bereits im Warenkorb ist
+function checkBasket(type, index) {
+    let item;
+    if (type == 'burger') {
+        item = burger[index]; // Z.b. Cheesebuger wenn type=burger && index = 0
+    }
+    if (type == 'sandwich') {
+        item = sandwiches[index];
+    }
+    if (type == 'fries') {
+        item = fries[index];
+    }
+    if (type == 'beverages') {
+        item = beverages[index];
+    }
+    let itemInCart = cart.find(e => e.name == item.name);
+    if (itemInCart) {
+        alert('Das Gericht ist bereits im Warenkorb, du kannst die Anzahl direkt im Warenkorb erhöhen.');
+    } else {
+        addToBasket(type, index);
+    }
 
+}
 
 //Mit Klick auf das + wird das jeweilige Produkt dem Warenkorb hinzugefügt 
-//und gecheckt ob das Gericht schon im Warenkorb ist
-
- function addToBasket(type, index) {
-    let itemInCart = cart.find(function (e) {
-        return e.name == cart.name; } );
-        if (itemInCart)  {
-            alert('Das Gericht ist bereits im Warenkorb, du kannst die Anzahl direkt im Warenkorb erhöhen')
-        }
-
+function addToBasket(type, index) {
     if (type == 'burger') {
         cart.push(burger[index]);
     }
@@ -158,11 +172,10 @@ function loadItem(items, id) {
     if (type == 'beverages') {
         cart.push(beverages[index]);
     }
-
     updateBasket();
 }
 
-
+//Ein Produkt wird aus dem Warenkorb gelöscht wenn man auf die Mülltonne klickt
 function deleteDish(index) {
     cart.splice([index], 1);
     updateBasket();
@@ -179,7 +192,7 @@ function updateBasket() {
     <div min="0" class="basket-amount"> ${cartItem['amount']}x </div>
     <div class="basket-names"> ${cartItem['name']} </div>
     <div class="plusminus-container">
-    <button onclick="lessAmount('${cartItem['type']}', ${index})" class="plusminus"> - </button>
+    <button onclick="lessAmount('${cartItem['type']}', ${index})" class="plusminus" data-min="0"> - </button>
     <button onclick="increaseAmount('${cartItem['type']}', ${index})" class="plusminus"> + </button>
     </div>
     <div id="prices" class="basket-price"> ${calcPrice(cartItem)} € </div>
@@ -188,54 +201,39 @@ function updateBasket() {
     }
 }
 
- function lessAmount(type, i) {
-    if (type == 'burger') {
-        burger[i]['amount']--;
-    }
-    if (type == 'sandwich') {
-        sandwiches[i]['amount']--;
-    }
-    if (type == 'fries') {
-        fries[i]['amount']--;
-    }
-    if (type == 'beverages') {
-        beverages[i]['amount']--;
-    }
+function lessAmount(type, i) {
+    if(cart[i]['amount'] > 1) {
+    cart[i]['amount']--;
     updateBasket();
-} 
+    calcSumPrice();
+} else {
+    deleteDish(i)
+}
+}
 
 
 function increaseAmount(type, i) {
-    if (type == 'burger') {
-        burger[i]['amount']++;
-    }
-    if (type == 'sandwich') {
-        sandwiches[i]['amount']++;
-    }
-    if (type == 'fries') {
-        fries[i]['amount']++;
-    }
-    if (type == 'beverages') {
-        beverages[i]['amount']++;
-    }
+    cart[i]['amount']++;
     updateBasket();
+    calcSumPrice();
 }
 
 
 //Preis berechnen je nach Menge
 function calcPrice(cartItem) {
-    return Math.round(cartItem['amount'] *
-        cartItem['price'] * 100 / 100);
+    return Math.abs(cartItem['amount'] *
+        cartItem['price'] * 100 / 100).toFixed(2).replace(".", ",");
 }
+
 
 //Preis berechnen Zwischensumme & Gesamt
 function calcSumPrice() {
     let sum = 0;
     let total = 0;
     for (i = 0; i < cart.length; i++) {
-        sum += +cart[i]['price'];
-    }  document.getElementById('sum').innerHTML = `${sum.toFixed(2).replace(".", ",")} €`;
-    
+        sum += cart[i]['price'] * cart[i]['amount'];
+    } document.getElementById('sum').innerHTML = `${sum.toFixed(2).replace(".", ",")} €`;
+
     for (let i = 0; i < cart.length; i++) {
         total = sum + 3.00;
     } document.getElementById('total').innerHTML = `${total.toFixed(2).replace(".", ",")} €`;
@@ -243,7 +241,7 @@ function calcSumPrice() {
     updateBasket();
 }
 
-
+//Bei Klicken auf den Bestell-Button kommt dieses Alert
 function alertOrder() {
     alert('Lass es dir schmecken!');
 }
