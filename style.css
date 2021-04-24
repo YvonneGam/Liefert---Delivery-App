@@ -1,3 +1,7 @@
+html {
+scroll-behavior: smooth;
+}
+
 /*Satzspiegel // Gerüst */
 
 body {
@@ -7,7 +11,7 @@ body {
 }
 
 .header {
-    background-color: #ff8000;
+    background-color: #A63D33;
     display: flex;
     color: white;
     padding-left: 50px;
@@ -39,17 +43,29 @@ body {
     width: 93%;
 }
 
+.restaurant {
+    text-decoration: none;
+}
+
+.restaurant:hover {
+    color: #be6e23; 
+}
+
+.restaurant-name{
+   color: black; 
+}
+
 .rate {
     display: flex;
     align-items: baseline;
 }
 
 .rate-click {
-    color: rgb(27, 126, 172);
+    color: #D9981E; 
 }
 
 .rate-click:hover {
-    color: rgb(11, 58, 78);
+    color: #be6e23; 
     cursor: pointer;
 }
 
@@ -98,12 +114,11 @@ body {
 
 .products a {
     text-decoration: none;
-    color: black;
-    color: rgb(27, 126, 172);
+    color: #D9981E; 
 }
 
 .products a:hover {
-    color: rgb(11, 58, 78);
+    color: #be6e23; 
 }
 
 .food-category {
@@ -132,6 +147,10 @@ body {
     justify-content: space-between;
 }
 
+.dish:hover {
+    background-color:rgb(250, 246, 242);
+}
+
 .dish-input {
     padding: 20px;
 }
@@ -141,22 +160,22 @@ body {
     padding-right: 20px;
     padding-top: 20px;
     cursor: pointer;
-    text-decoration: none; 
-    color: rgb(27, 126, 172);
+    text-decoration: none;
+    color:#D9981E; 
 }
 
 .plus:hover {
     text-decoration: none;
-    color: rgb(27, 126, 172);
+    color: #D9981E; 
 }
 
 .plus a:hover {
-    color: rgb(11, 58, 78);
+    color: #be6e23; 
 }
 
 h2 {
     font-size: 18px;
-    padding-left: 20px;
+    padding-left: 30px;
 }
 
 .product-name {
@@ -172,7 +191,7 @@ h2 {
 .product-price {
     font-size: 16px;
     font-weight: bolder;
-    color: #ff8000;
+    color: #A63D33;
 }
 
 .paytime {
@@ -182,7 +201,7 @@ h2 {
 }
 
 .order-btn {
-    background-color: rgb(27, 126, 172);
+    background-color: #A63D33;
     color: white;
     border: none;
     font-size: 30px;
@@ -192,11 +211,11 @@ h2 {
 }
 
 .order-btn:hover {
-    background-color: rgb(11, 58, 78);
+    background-color: #8d332a;
 }
 
 .liefert-logo {
-    width: 50px;
+    width: 80px;
 }
 
 .smooth {
@@ -207,6 +226,26 @@ h2 {
     display: flex;
     align-items: center;
     flex-direction: column;
+}
+
+
+iframe {
+    width: 80%; 
+}
+
+.btn-order-now {
+    background-color: #A63D33;
+    color: white;
+    border: none;
+    font-size: 20px;
+    margin-top: 30px;
+    padding: 15px;
+    margin-bottom: 60px; 
+    margin-left: 30px;
+    cursor: pointer;
+}
+.btn-order-now:hover {
+background-color: #8d332a;
 }
 
 /*Warenkorb Felder*/
@@ -246,6 +285,7 @@ h2 {
     height: 22px;
     margin-right: 4px;
     background-color: white;
+    cursor: pointer;
 }
 
 .basket-price {
@@ -292,7 +332,7 @@ h2 {
 /*Footer*/
 
 .footer {
-    background-color: #0a3847;
+    background-color: #A63D33;
     color: white;
     font-size: 10px;
     padding: 30px;
@@ -321,8 +361,8 @@ h2 {
     }
     .basket {
         width: 92%;
-        margin-left: 30px; 
-        box-shadow: 0px 0px 0px ;
+        margin-left: 30px;
+        box-shadow: 0px 0px 0px;
     }
     .basket-input {
         padding-left: 0px;
@@ -332,17 +372,29 @@ h2 {
         height: 100%;
         margin-bottom: 400px;
     }
-
     .order-btn {
         width: 100%;
     }
-
     .row-pay {
         font-size: 16px;
     }
-
     .arrow-top {
         margin-top: 20px;
+    }
+
+    iframe {
+        width: 90%;
+    }
+}
+
+@media(max-width: 650px) {
+    span {
+        font-size: 18px;
+        margin-left: -20px;
+    }
+
+    .adress {
+        font-size: 13px;
     }
 }
 
@@ -405,17 +457,20 @@ h2 {
         font-size: 14px;
     }
     .basket {
-        margin-left: 30px; 
-        box-shadow: 0px 0px 0px ;
+        margin-left: 30px;
+        box-shadow: 0px 0px 0px;
     }
     .basket-input {
         padding-left: 0px;
         position: inherit;
         width: 82%;
-        margin-bottom: 100px; 
+        margin-bottom: 100px;
     }
-
     .arrow-top {
         margin-top: 20px;
+    }
+
+    iframe {
+        width: 85%;
     }
 }
